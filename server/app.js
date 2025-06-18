@@ -1,4 +1,4 @@
-const express = require('express');
+const express = require('express'); 
 const mysql = require('mysql2/promise');
 const cors = require('cors');
 const bodyParser = require('body-parser');
@@ -22,27 +22,27 @@ app.post('/api/register/student', async (req, res) => {
   let connection;
 
   try {
-    // 1. Establecer conexión
+    // Establecer conexión
     connection = await mysql.createConnection(dbConfig);
     await connection.beginTransaction();
 
-    // 2. Generar UUID para el usuario
+    // Generar UUID para el usuario
     const userId = uuidv4();
     console.log('UUID generado:', userId);
 
-    // 3. Insertar usuario con UUID
+    // Insertar usuario con UUID
     const [userResult] = await connection.execute(
       'INSERT INTO Users (IDUser, Username, Userpassword) VALUES (?, ?, ?)',
       [userId, user.username, user.password]
     );
 
-    // 4. Insertar en Participants
+    // Insertar en Participants
     await connection.execute(
       'INSERT INTO Participants (IDParticipant, NameParticipant, LastName_1, LastName_2, Category, IDUser) VALUES (?, ?, ?, ?, ?, ?)',
       [participant.rfid, participant.name, participant.lastName1, participant.lastName2, 'estudiante', userId]
     );
 
-    // 5. Insertar en Student
+    // Insertar en Student
     await connection.execute(
       'INSERT INTO Student (IDParticipant, Major, Semester) VALUES (?, ?, ?)',
       [participant.rfid, student.major, student.semester]
@@ -103,27 +103,27 @@ app.post('/api/register/administrative', async (req, res) => {
   let connection;
 
   try {
-    // 1. Establecer conexión
+    // Establecer conexión
     connection = await mysql.createConnection(dbConfig);
     await connection.beginTransaction();
 
-    // 2. Generar UUID para el usuario
+    // Generar UUID para el usuario
     const userId = uuidv4();
     console.log('UUID generado:', userId);
 
-    // 3. Insertar usuario con UUID
+    // Insertar usuario con UUID
     const [userResult] = await connection.execute(
       'INSERT INTO Users (IDUser, Username, Userpassword) VALUES (?, ?, ?)',
       [userId, user.username, user.password]
     );
 
-    // 4. Insertar en Participants
+    // Insertar en Participants
     await connection.execute(
       'INSERT INTO Participants (IDParticipant, NameParticipant, LastName_1, LastName_2, Category, IDUser) VALUES (?, ?, ?, ?, ?, ?)',
       [participant.rfid, participant.name, participant.lastName1, participant.lastName2, 'Administrador/Docente', userId]
     );
 
-    // 5. Insertar en AdminTeacher (tabla para administrativos)
+    // Insertar en AdminTeacher (tabla para administrativos)
     await connection.execute(
       'INSERT INTO AdminTeacher (IDParticipant, Rol, Major) VALUES (?, ?, ?)',
       [participant.rfid, administrative.rol, administrative.major]
@@ -186,21 +186,21 @@ app.post('/api/register/libre', async (req, res) => {
   let connection;
 
   try {
-    // 1. Establecer conexión
+    // Establecer conexión
     connection = await mysql.createConnection(dbConfig);
     await connection.beginTransaction();
 
-    // 2. Generar UUID para el usuario
+    // Generar UUID para el usuario
     const userId = uuidv4();
     console.log('UUID generado:', userId);
 
-    // 3. Insertar usuario con UUID
+    // Insertar usuario con UUID
     const [userResult] = await connection.execute(
       'INSERT INTO Users (IDUser, Username, Userpassword) VALUES (?, ?, ?)',
       [userId, user.username, user.password]
     );
 
-    // 4. Insertar en Participants
+    // Insertar en Participants
     await connection.execute(
       'INSERT INTO Participants (IDParticipant, NameParticipant, LastName_1, LastName_2, Category, IDUser) VALUES (?, ?, ?, ?, ?, ?)',
       [participant.rfid, participant.name, participant.lastName1, participant.lastName2, 'libre', userId]
