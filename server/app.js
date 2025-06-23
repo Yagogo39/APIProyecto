@@ -1,7 +1,7 @@
 const express = require('express');
 const mysql = require('mysql2/promise');
-const cors = require('cors');
-const bodyParser = require('body-parser');
+const cors = require('cors'); //Permite solicitudes de otros origenes
+const bodyParser = require('body-parser'); //Transforma el cuerpo
 const { v4: uuidv4 } = require('uuid');
 
 const app = express();
@@ -10,9 +10,9 @@ app.use(bodyParser.json());
 
 const dbConfig = {
   host: 'sql10.freesqldatabase.com',
-  user: 'sql10785119',
-  password: 'm5EA4FFDQT',
-  database: 'sql10785119',
+  user: 'sql10786405',
+  password: 'ygewRIuATj',
+  database: 'sql10786405',
   port: 3306
 };
 
@@ -22,7 +22,7 @@ app.post('/api/register/student', async (req, res) => {
   let connection;
 
   try {
-    // 1. Establecer conexión
+    // Establecer conexión
     connection = await mysql.createConnection(dbConfig);
     await connection.beginTransaction();
 
@@ -79,8 +79,8 @@ app.post('/api/register/student', async (req, res) => {
 
 
     let errorMessage = 'Error en el registro';
-    let statusCode = 500;
-
+    let statusCode = 500; //Error del servidor
+    //Errores de duplicado
     if (err.code === 'ER_DUP_ENTRY') {
       statusCode = 400;
       if (err.message.includes('Users.Username')) {
